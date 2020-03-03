@@ -30,6 +30,11 @@ public class LocalizationTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
+        hardwareMap.get(DcMotor.class, "lf").setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardwareMap.get(DcMotor.class, "rf").setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardwareMap.get(DcMotor.class, "lb").setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardwareMap.get(DcMotor.class, "rb").setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         SampleMecanumDriveBase drive = new SampleMecanumDriveREVOptimized(hardwareMap);
 
         waitForStart();
@@ -41,7 +46,19 @@ public class LocalizationTest extends LinearOpMode {
                     -gamepad1.right_stick_x
             );
 
+           /* baseVel = new Pose2d(
+                    -gamepad1.left_stick_y,
+                    0,
+                    0
+            );*/
+
             Pose2d vel;
+
+           // if(gamepad1.dpad_left) baseVel = new Pose2d(0, -0.5, 0);
+            //if(gamepad1.dpad_right) baseVel = new Pose2d(0, 0.5, 0);
+            //if(gamepad1.dpad_up)  baseVel = new Pose2d(0.5, 0, 0);
+            //if(gamepad1.dpad_down)  baseVel = new Pose2d(-0.5, 0, 0);
+
             if (Math.abs(baseVel.getX()) + Math.abs(baseVel.getY()) + Math.abs(baseVel.getHeading()) > 1) {
                 // re-normalize the powers according to the weights
                 double denom = VX_WEIGHT * Math.abs(baseVel.getX())
@@ -68,6 +85,7 @@ public class LocalizationTest extends LinearOpMode {
             telemetry.addData("lb", hardwareMap.get(DcMotor.class, "lb").getCurrentPosition());
             telemetry.addData("rf", hardwareMap.get(DcMotor.class, "rf").getCurrentPosition());
             telemetry.addData("rb", hardwareMap.get(DcMotor.class, "rb").getCurrentPosition());
+            telemetry.addData("ticks per revolution", hardwareMap.get(DcMotor.class, "lf").getMotorType().getTicksPerRev());
             telemetry.addData("max velocity", drive.getWheelVelocities().get(0));
 
 

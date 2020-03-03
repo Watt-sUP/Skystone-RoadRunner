@@ -33,9 +33,9 @@ public class DriveConstants {
      * Set the first flag appropriately. If using the built-in motor velocity PID, update
      * MOTOR_VELO_PID with the tuned coefficients from DriveVelocityPIDTuner.
      */
-    public static final double kP = 0.0;
-    public static final double kI = 0.0;
-    public static final double kD = 0.0;
+    public static final double kP = 4.0;
+    public static final double kI = 0;
+    public static final double kD = 10.0;
 
     public static final boolean RUN_USING_ENCODER = true;
     public static final PIDCoefficients MOTOR_VELO_PID = new PIDCoefficients(kP, kI, kD);
@@ -71,7 +71,7 @@ public class DriveConstants {
      * forces acceleration-limited profiling).
      */
     public static DriveConstraints BASE_CONSTRAINTS = new DriveConstraints(
-            55.0, 90.0, 0.0,
+            60.0, 40.0, 0.0,
             Math.toRadians(360.0), Math.toRadians(360.0), 0.0
     );
 
