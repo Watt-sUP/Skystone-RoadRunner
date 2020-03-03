@@ -6,9 +6,11 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.drive.mecanum.SampleMecanumDriveBase;
 import org.firstinspires.ftc.teamcode.drive.mecanum.SampleMecanumDriveREV;
+import org.firstinspires.ftc.teamcode.drive.mecanum.SampleMecanumDriveREVOptimized;
 
 /**
  * This is a simple teleop routine for testing localization. Drive the robot around like a normal
@@ -28,7 +30,7 @@ public class LocalizationTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        SampleMecanumDriveBase drive = new SampleMecanumDriveREV(hardwareMap);
+        SampleMecanumDriveBase drive = new SampleMecanumDriveREVOptimized(hardwareMap);
 
         waitForStart();
 
@@ -62,6 +64,13 @@ public class LocalizationTest extends LinearOpMode {
             telemetry.addData("x", poseEstimate.getX());
             telemetry.addData("y", poseEstimate.getY());
             telemetry.addData("heading", poseEstimate.getHeading());
+            telemetry.addData("lf", hardwareMap.get(DcMotor.class, "lf").getCurrentPosition());
+            telemetry.addData("lb", hardwareMap.get(DcMotor.class, "lb").getCurrentPosition());
+            telemetry.addData("rf", hardwareMap.get(DcMotor.class, "rf").getCurrentPosition());
+            telemetry.addData("rb", hardwareMap.get(DcMotor.class, "rb").getCurrentPosition());
+            telemetry.addData("max velocity", drive.getWheelVelocities().get(0));
+
+
             telemetry.update();
         }
     }
